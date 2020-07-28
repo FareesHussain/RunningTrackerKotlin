@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Running Tracker</string>
-    <string name="googleMapsKey">Enter Your API key</string>
+    <string name="googleMapsKey">AIzaSyBNVZIb1FFASgqcIcJSchi9IwsAgXQ3W0o</string>
+<!--    <string name="googleMapsKey">Enter Your API key</string>-->
 
     <string-array name="filter_options">
         <item>Date</item>

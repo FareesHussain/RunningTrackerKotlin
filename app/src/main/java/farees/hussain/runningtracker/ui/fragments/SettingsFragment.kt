@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import farees.hussain.runningtracker.R
-import farees.hussain.runningtracker.databinding.FragmentRunBinding
 
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 

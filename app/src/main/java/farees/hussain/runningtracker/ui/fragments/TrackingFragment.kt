@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import farees.hussain.runningtracker.R
-import farees.hussain.runningtracker.databinding.FragmentRunBinding
 import farees.hussain.runningtracker.ui.viewmodels.MainViewModel
 
 @AndroidEntryPoint
