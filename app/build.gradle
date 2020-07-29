@@ -83,7 +83,7 @@ dependencies {
 
     // Dagger Core
     implementation "com.google.dagger:dagger:2.28.1"
-    kapt "com.google.dagger:dagger-compiler:2.25.2"
+    kapt "com.google.dagger:dagger-compiler:2.28"
 
     // Dagger Android
     api 'com.google.dagger:dagger-android:2.28.1'
