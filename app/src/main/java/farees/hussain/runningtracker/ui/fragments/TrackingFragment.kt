@@ -1,5 +1,6 @@
 package farees.hussain.runningtracker.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.GoogleMap
 import dagger.hilt.android.AndroidEntryPoint
 import farees.hussain.runningtracker.R
+import farees.hussain.runningtracker.other.Constants
+import farees.hussain.runningtracker.service.TrackingService
 import farees.hussain.runningtracker.ui.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_tracking.*
 
@@ -23,10 +26,20 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
         super.onViewCreated(view, savedInstanceState)
         mapView?.onCreate(savedInstanceState)
 
+        btnToggleRun.setOnClickListener {
+            sendCommandToService(Constants.ACTION_START_OR_RESUME_SERVICE)
+        }
+
         mapView?.getMapAsync{googleMap ->
             map = googleMap
         }
     }
+
+    private fun sendCommandToService(action: String) =
+        Intent(requireContext(),TrackingService::class.java).also {
+            it.action = action
+            requireContext().startService(it)
+        }
 
     override fun onResume() {
         super.onResume()
