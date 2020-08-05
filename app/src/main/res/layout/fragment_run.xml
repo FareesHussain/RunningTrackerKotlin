@@ -49,6 +49,7 @@
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@android:color/black" />
+        app:tint="@android:color/black"
+        android:layout_marginRight="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
