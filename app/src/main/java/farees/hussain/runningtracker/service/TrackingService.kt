@@ -56,6 +56,7 @@ class TrackingService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
+        postInitialValues()
         fusedLocationProviderClient = FusedLocationProviderClient(this)
 
         isTracking.observe(this, Observer {bool->
@@ -74,10 +75,12 @@ class TrackingService : LifecycleService() {
                         isFirstRun = false
                     }else{
                         Timber.d("Resuming Service...")
+                        startForegroundService()
                     }
                 }
                 ACTION_PAUSE_SERVICE ->{
                     Timber.d("Paused service")
+                    pauseService()
                 }
                 ACTION_STOP_SERVICE->{
                     Timber.d("Stoped service")
@@ -86,6 +89,10 @@ class TrackingService : LifecycleService() {
         }
 
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun pauseService(){
+        isTracking.postValue(false)
     }
 
     @SuppressLint("MissingPermission")
@@ -124,7 +131,7 @@ class TrackingService : LifecycleService() {
 
     private fun addPathPoint(location: Location?){
         location?.let {
-            val pos = LatLng(location.latitude,location.latitude)
+            val pos = LatLng(location.latitude,location.longitude)
             pathPoints.value?.apply {
                 last().add(pos)
                 pathPoints.postValue(this)
@@ -142,8 +149,7 @@ class TrackingService : LifecycleService() {
         addEmptyPolyline()
         isTracking.postValue(true)
 
-         val notificationManager =  getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
+        val notificationManager =  getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             createNotificationChannel(notificationManager)
         }
