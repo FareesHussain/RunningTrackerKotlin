@@ -2,10 +2,7 @@ package farees.hussain.runningtracker.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,12 +11,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
 import farees.hussain.runningtracker.R
-import farees.hussain.runningtracker.other.Constants
 import farees.hussain.runningtracker.other.Constants.ACTION_PAUSE_SERVICE
 import farees.hussain.runningtracker.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import farees.hussain.runningtracker.other.Constants.MAP_ZOOM
 import farees.hussain.runningtracker.other.Constants.POLYLINE_COLOR
 import farees.hussain.runningtracker.other.Constants.POLYLINE_WIDTH
+import farees.hussain.runningtracker.other.TrackingUtility
 import farees.hussain.runningtracker.service.Polyline
 import farees.hussain.runningtracker.service.TrackingService
 import farees.hussain.runningtracker.ui.viewmodels.MainViewModel
@@ -35,6 +32,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     private var isTracking = false
     private var pathPoints = mutableListOf<Polyline>()
 
+    private var currentTimeMillis = 0L
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mapView.onCreate(savedInstanceState)
@@ -48,10 +47,10 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             map = googleMap
             addAllPolylines()
         }
-        subscribeToObserve()
+        subscribeToObservers()
     }
 
-    private fun subscribeToObserve(){
+    private fun subscribeToObservers(){
         TrackingService.isTracking.observe(viewLifecycleOwner, Observer {
             updateTracking(it)
         })
@@ -60,6 +59,12 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
             pathPoints = it
             addLatestPolyline()
             moveCameraToUser()
+        })
+
+        TrackingService.timeRunInMillis.observe(viewLifecycleOwner, Observer {time->
+            currentTimeMillis = time
+            val formattedTime = TrackingUtility.getFormattedStopWatchTime(currentTimeMillis,true)
+            tvTimer.text = formattedTime
         })
     }
 
