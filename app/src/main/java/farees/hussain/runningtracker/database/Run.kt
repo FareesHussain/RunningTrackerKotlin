@@ -9,7 +9,7 @@ data class Run(
     var img : Bitmap?= null,
     var timestamp: Long = 0L,
     var avgSpeedInKMH : Float = 0F,
-    var distanceInKM : Int = 0,
+    var distanceInkm : Int = 0,
     var timeInMillis : Long = 0L,
     var caloriesBurned : Int = 0
 ) {
