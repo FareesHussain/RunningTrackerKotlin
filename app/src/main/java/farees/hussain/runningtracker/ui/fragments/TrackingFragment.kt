@@ -33,6 +33,7 @@ import farees.hussain.runningtracker.ui.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_tracking.*
 import timber.log.Timber
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.round
 
 @AndroidEntryPoint
@@ -49,7 +50,8 @@ class TrackingFragment : Fragment(R.layout.fragment_tracking) {
     private var menu: Menu?= null
 
     //TODO weight should be taken from shared pref given by the user
-    private var weight = 80f
+    @set:Inject
+    var weight = 80f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
