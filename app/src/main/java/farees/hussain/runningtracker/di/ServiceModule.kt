@@ -34,7 +34,7 @@ object ServiceModule {
             it.action = Constants.ACTION_SHOW_TRACKING_FRAGMENT
         },
         PendingIntent.FLAG_UPDATE_CURRENT
-    )
+    )!!
 
     @ServiceScoped
     @Provides
@@ -49,5 +49,5 @@ object ServiceModule {
         .setSmallIcon(R.drawable.ic_run)
         .setContentTitle("Running App")
         .setContentText("00:00:00")
-        .setContentIntent(pendingIntent)
+        .setContentIntent(pendingIntent)!!
 }

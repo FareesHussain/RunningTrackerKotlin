@@ -11,7 +11,9 @@ import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import farees.hussain.runningtracker.database.RunningDatabase
 import farees.hussain.runningtracker.other.Constants
+import farees.hussain.runningtracker.other.Constants.KEY_FIRST_TIME_TOGGLE
 import farees.hussain.runningtracker.other.Constants.KEY_NAME
+import farees.hussain.runningtracker.other.Constants.KEY_WEIGHT
 import farees.hussain.runningtracker.other.Constants.SHARED_PREFERENCES_NAME
 import javax.inject.Singleton
 
@@ -36,19 +38,21 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(@ApplicationContext app:Context){
+    fun provideSharedPreferences(@ApplicationContext app:Context) =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME,MODE_PRIVATE)
-    }
 
     @Singleton
     @Provides
     fun provideName(sharedPref:SharedPreferences) = sharedPref.getString(KEY_NAME,"")?:""
+
     @Singleton
     @Provides
-    fun provideWeight(sharedPref:SharedPreferences) = sharedPref.getFloat(KEY_NAME,80f)
+    fun provideWeight(sharedPref:SharedPreferences) = sharedPref.getFloat(KEY_WEIGHT,80f)
+
     @Singleton
     @Provides
-    fun provideFirstTimeToggle(sharedPref:SharedPreferences) = sharedPref.getBoolean(KEY_NAME,true)
+    fun provideFirstTimeToggle(sharedPref:SharedPreferences) = sharedPref.getBoolean(
+        KEY_FIRST_TIME_TOGGLE,true)
 
 
 
